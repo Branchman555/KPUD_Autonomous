@@ -11,7 +11,7 @@ mode = "RW"
 ResetFlag = 0
 
 ser = serial.Serial(
-    port='COM6',
+    port='COM8',
     baudrate=115200,
 )
 
@@ -35,6 +35,7 @@ count = 0
 df = pd.read_csv(r'./Data/example.csv')
 count = df.index[-1]
 print("Started...")
+
 if ser.readable():
     res = ser.readline()
     valueString = res.decode()[:len(res) - 1]
@@ -82,6 +83,7 @@ while True:
             elif int(valueList[0]) > 245:
                 valueList[0] = str(245)
 
+            valueList[1] = 0
             df.loc[count] = valueList
             ret, frame = cap.read()
             resized_img = cv2.resize(frame, (320, 180))
