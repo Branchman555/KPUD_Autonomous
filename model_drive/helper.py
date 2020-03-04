@@ -94,7 +94,7 @@ def random_gamma(image):
     return cv2.LUT(image, table)
 
 
-def random_shear(image, steering_angle, shear_range=200):
+def random_shear(image, steering_angle, shear_range=65):
     """
     Source: https://medium.com/@ksakmann/behavioral-cloning-make-a-car-drive-like-yourself-dc6021152713#.7k8vfppvk
 
@@ -115,7 +115,7 @@ def random_shear(image, steering_angle, shear_range=200):
     random_point = [cols / 2 + dx, rows / 2]
     pts1 = np.float32([[0, rows], [cols, rows], [cols / 2, rows / 2]])
     pts2 = np.float32([[0, rows], [cols, rows], random_point])
-    dsteering = dx / (rows / 2) * 360 / (2 * np.pi * 25.0) / 6.0
+    dsteering = dx / (rows / 2) * 360 / (2 * np.pi * 25.0) / 1.5
     M = cv2.getAffineTransform(pts1, pts2)
     image = cv2.warpAffine(image, M, (cols, rows), borderMode=1)
     steering_angle += dsteering
@@ -149,7 +149,7 @@ def min_max(data, a=-0.5, b=0.5):
     return a + (b - a) * ((data - data_min) / (data_max - data_min))
 
 
-def generate_new_image(image, steering_angle, top_crop_percent=0.35, bottom_crop_percent=0.1,
+def generate_new_image(image, steering_angle, top_crop_percent=0.3, bottom_crop_percent=0.35,
                        resize_dim=(64, 64), do_shear_prob=0.9):
     """
 
